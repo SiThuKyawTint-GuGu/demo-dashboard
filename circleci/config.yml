@@ -1,0 +1,59 @@
+version: 2.1
+
+executors:
+  php-executor:
+    docker:
+    - image: circleci/php:8.1-node-browsers
+      environment:
+        APP_ENV: testing
+        APP_KEY: base64:x78PFU90Je6jf6pSu8HKY8tPD12jgQNEwStqx3U6M+U=
+        DB_CONNECTION: mysql
+        DB_HOST: 127.0.0.1
+        DB_PORT: 3306
+        DB_DATABASE: demo
+        DB_USERNAME: root
+        DB_PASSWORD: root
+
+    - image: circleci/mysql:8.0
+      environment:
+        MYSQL_ROOT_PASSWORD: ""
+
+jobs:
+  install_dependencies:
+    executor: php-executor
+    steps:
+    - checkout
+    - run: cp .env.example .env
+    - run:
+        name: Install Composer dependencies
+        command: composer install --no-interaction --prefer-dist --optimize-autoloader
+    - run:
+        name: Install Node dependencies
+        command: npm install
+    - run:
+        name: Build assets
+        command: npm run dev
+
+  run_tests:
+    executor: php-executor
+    steps:
+    - checkout
+    - run: cp .env.example .env
+    - run:
+        name: Set application key
+        command: php artisan key:generate
+    - run:
+        name: Run database migrations
+        command: php artisan migrate --seed --force
+    - run:
+        name: Run tests
+        command: vendor/bin/phpunit
+
+workflows:
+  version: 2
+  test:
+    jobs:
+    - install_dependencies
+    - run_tests:
+        requires:
+        - install_dependencies
