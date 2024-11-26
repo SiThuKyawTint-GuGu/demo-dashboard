@@ -3,7 +3,7 @@ version: 2.1
 executors:
   php-executor:
     docker:
-    - image: cimg/php:8.1-node
+    - image: cimg/php:8.2-node
       environment:
         APP_ENV: testing
         APP_KEY: base64:testingkey1234567890=
