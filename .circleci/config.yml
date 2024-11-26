@@ -40,6 +40,9 @@ jobs:
     - checkout
     - run: cp .env.example .env
     - run:
+        name: Install Composer dependencies
+        command: composer install --no-interaction --prefer-dist --optimize-autoloader
+    - run:
         name: Set application key
         command: php artisan key:generate
     - run:
