@@ -3,16 +3,16 @@ version: 2.1
 executors:
   php-executor:
     docker:
-    - image: circleci/php:8.1-node-browsers
+    - image: cimg/php:8.1-node
       environment:
         APP_ENV: testing
-        APP_KEY: base64:x78PFU90Je6jf6pSu8HKY8tPD12jgQNEwStqx3U6M+U=
+        APP_KEY: base64:testingkey1234567890=
         DB_CONNECTION: mysql
         DB_HOST: 127.0.0.1
         DB_PORT: 3306
-        DB_DATABASE: demo
+        DB_DATABASE: circle_test
         DB_USERNAME: root
-        DB_PASSWORD: root
+        DB_PASSWORD: ""
 
     - image: circleci/mysql:8.0
       environment:
