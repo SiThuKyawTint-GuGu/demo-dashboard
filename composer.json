@@ -12,6 +12,8 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.5",
+        "laravel/vapor-cli": "^1.65",
+        "laravel/vapor-core": "^2.37",
         "maatwebsite/excel": "^1.1",
         "phpoffice/phpspreadsheet": "^3.5"
     },

@@ -28,8 +28,8 @@ This project implements an admin authentication system with Multi-Factor Authent
 
 ### Setup Instructions
 Step 1: Clone the Repository
-- git clone https://github.com/your-username/your-repo-name.git  
-- cd your-repo-name  
+- git clone https://github.com/SiThuKyawTint-GuGu/demo-dashboard.git
+- cd demo-dashboard
 
 Step 2: Install Dependencies
 - composer install  
@@ -87,3 +87,21 @@ password - password
 
 
 ### Deployment Details
+
+- terraform
+- AWS (ECS)
+- DynamoDB
+
+### Terraform
+
+before you use terrafrom you need to configure aws
+
+-aws configure (fill secret key and access key and region)
+
+and then go to terraform folder
+- terraform init
+- terraform plan
+- terraform apply -auto-approve
+ 
+for destroy
+- terraform destroy -auto-approve
