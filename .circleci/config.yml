@@ -13,7 +13,6 @@ executors:
         DB_DATABASE: circle_test
         DB_USERNAME: root
         DB_PASSWORD: ""
-
     - image: circleci/mysql:8.0
       environment:
         MYSQL_ROOT_PASSWORD: ""
@@ -31,8 +30,8 @@ jobs:
         name: Install Node dependencies
         command: npm install
     - run:
-        name: Build assets
-        command: npm run dev
+        name: Build assets (Production)
+        command: npm run build # Change from npm run dev to npm run build for CI
 
   run_tests:
     executor: php-executor
@@ -42,6 +41,13 @@ jobs:
     - run:
         name: Set application key
         command: php artisan key:generate
+    - run:
+        name: Wait for MySQL to be ready 
+        command: |
+          until mysql -h 127.0.0.1 -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT 1"; do
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
     - run:
         name: Run database migrations
         command: php artisan migrate --seed --force
