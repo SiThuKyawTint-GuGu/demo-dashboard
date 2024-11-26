@@ -15,17 +15,22 @@ executors:
         DB_PASSWORD: root
     - image: circleci/mysql:8.0
       environment:
-        MYSQL_ROOT_PASSWORD: ""
+        MYSQL_ROOT_PASSWORD: root
 
 jobs:
   install_dependencies:
     executor: php-executor
     steps:
     - checkout
-    - run: cp .env.example .env
+    - run:
+        name: Copy .env file
+        command: cp .env.example .env
     - run:
         name: Install Composer dependencies
-        command: composer install --no-interaction --prefer-dist --optimize-autoloader
+        command: composer install --no-interaction --prefer-dist --optimize-autoloader --verbose
+    - run:
+        name: List vendor directory (for debugging)
+        command: ls -la vendor
     - run:
         name: Install Node dependencies
         command: npm install
@@ -37,7 +42,9 @@ jobs:
     executor: php-executor
     steps:
     - checkout
-    - run: cp .env.example .env
+    - run:
+        name: Copy .env file
+        command: cp .env.example .env
     - run:
         name: Install MySQL client
         command: |
