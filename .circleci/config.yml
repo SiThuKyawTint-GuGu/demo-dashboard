@@ -13,7 +13,6 @@ executors:
         DB_DATABASE: circle_test
         DB_USERNAME: root
         DB_PASSWORD: ""
-    # MySQL container
     - image: circleci/mysql:8.0
       environment:
         MYSQL_ROOT_PASSWORD: ""
@@ -44,7 +43,10 @@ jobs:
         command: composer install --no-interaction --prefer-dist --optimize-autoloader
     - run:
         name: Install MySQL client
-        command: apt-get update && apt-get install -y mysql-client
+        command: |
+          apt-get update
+          apt-get install -y sudo
+          sudo apt-get install -y mysql-client
     - run:
         name: Set application key
         command: php artisan key:generate
